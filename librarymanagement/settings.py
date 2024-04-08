@@ -93,7 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
 
@@ -116,8 +116,9 @@ LOGIN_REDIRECT_URL='/afterlogin'
 
 #for email
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.example.com'  # Substitua 'example.com' pelo seu host de e-mail 
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sumitproject1503@gmail.com'
-EMAIL_HOST_PASSWORD = 'sumityoyo'
+EMAIL_HOST_USER = 'example@example.com'  # Substitua 'example@example.com' pelo seu nome de usuário 
+EMAIL_HOST_PASSWORD = 'your_password_here'  # Substitua 'your_password_here' pela sua senha
+#Não Coloque informações verdadeiras (Coloquem informações fictícias)
