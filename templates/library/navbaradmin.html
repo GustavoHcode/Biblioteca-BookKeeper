@@ -52,7 +52,9 @@
                   <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Livro</a>
                   <div class="dropdown-menu">
                     <a href="addbook" class="dropdown-item">Adicionar Livro</a>
-                    <a href="viewbook" class="dropdown-item">Visualizar Livro</a>
+                    <a href="viewbook" class="dropdown-item">Visualizar Livro</a> 
+                    <a href="removebook" class="dropdown-item">Remover Livro</a>
+                    <a href="editbook" class="dropdown-item">Editar Livro</a>
                   </div>
                 </div>
 
@@ -72,8 +74,10 @@
                     <a href="viewstudent" class="dropdown-item">Visualizar Estudante</a>
                   </div>
                 </div>
-                <a href="logout" class="nav-item nav-link">SAIR</a> &nbsp
-                
+                <form action="{% url 'logout' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="nav-item nav-link btn btn-link">SAIR</button>
+              </form>
             </div>
 
 

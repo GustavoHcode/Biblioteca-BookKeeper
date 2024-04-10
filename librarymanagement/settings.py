@@ -112,7 +112,12 @@ STATICFILES_DIRS=[
 STATIC_DIR,
  ]
 
-LOGIN_REDIRECT_URL='/afterlogin'
+
+LOGIN_REDIRECT_URL='/'
+
+LOGOUT_REDIRECT_URL='/accounts/login'
+
+
 
 #for email
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
@@ -122,3 +127,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'example@example.com'  # Substitua 'example@example.com' pelo seu nome de usuário 
 EMAIL_HOST_PASSWORD = 'your_password_here'  # Substitua 'your_password_here' pela sua senha
 #Não Coloque informações verdadeiras (Coloquem informações fictícias)
+
+

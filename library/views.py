@@ -8,7 +8,12 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from datetime import datetime,timedelta,date
 from django.core.mail import send_mail
 from librarymanagement.settings import EMAIL_HOST_USER
-
+from .models import Book
+from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from .forms import BookForm
 
 def home_view(request):
     if request.user.is_authenticated:
@@ -99,10 +104,39 @@ def addbook_view(request):
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
+def remove_book_view(request):
+    books = Book.objects.all()
+    if request.method == 'POST':
+        isbn = request.POST.get('isbn')  
+        book = Book.objects.filter(isbn=isbn).first()  
+        if book: 
+            book.delete()  
+        return redirect('viewbook')  
+    return render(request, 'library/remove_book.html', {'books': books})
+
+
+def edit_book_list_view(request):
+    books = models.Book.objects.all()
+    return render(request, 'library/edit_book_list.html', {'books': books})
+
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def edit_book_view(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    form = forms.BookForm(instance=book)
+    if request.method == 'POST':
+        form = forms.BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('viewbook'))
+    return render(request, 'library/editbook.html', {'form': form})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
 def viewbook_view(request):
     books=models.Book.objects.all()
     return render(request,'library/viewbook.html',{'books':books})
-
 
 
 
@@ -199,3 +233,4 @@ def contactus_view(request):
             send_mail(str(name)+' || '+str(email),message, EMAIL_HOST_USER, ['wapka1503@gmail.com'], fail_silently = False)
             return render(request, 'library/contactussuccess.html')
     return render(request, 'library/contactus.html', {'form':sub})
+

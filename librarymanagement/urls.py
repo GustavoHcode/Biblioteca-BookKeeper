@@ -20,11 +20,16 @@ urlpatterns = [
     path('adminlogin', LoginView.as_view(template_name='library/adminlogin.html')),
     path('studentlogin', LoginView.as_view(template_name='library/studentlogin.html')),
 
-    path('logout', LogoutView.as_view(template_name='library/index.html')),
+    path('logout', LogoutView.as_view()),
     path('afterlogin', views.afterlogin_view),
+    
 
     path('addbook', views.addbook_view),
-    path('viewbook', views.viewbook_view),
+    path('removebook/', views.remove_book_view),
+    path('editbook/', views.edit_book_list_view, name='edit_book_list'),
+    path('editbook/<int:pk>/', views.edit_book_view, name='edit_book'),
+
+    path('viewbook', views.viewbook_view, name='viewbook'),
     path('issuebook', views.issuebook_view),
     path('viewissuedbook', views.viewissuedbook_view),
     path('viewstudent', views.viewstudent_view),
