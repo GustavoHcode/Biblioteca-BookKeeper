@@ -1,6 +1,0 @@
-use os comandos: pip install -r requirements.txt 
-python manage.py makemigrations
-python manage.py runserver
-E não se esqueça de criar um superusuário
-Se notar qualquer erro de tradução ou problema no funcionamento, por favor nos avise o quanto antes para que possamos resolver
-Se tiverem dúvidas, sintam-se à vontade para nos enviar pelo Discord ou até mesmo pelo WhatsApp. Assim que possível, responderemos
