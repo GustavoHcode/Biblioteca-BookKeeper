@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
+    <div class="row justify-content-start align-items-center" style="margin-top: 50px; width: 100%;">
+        <div class="col-md-2 text-light" style="background: #5033F4; height: 50px;">
+            <h4>Registre um novo aluno</h4>
+        </div>
+    </div>
+
+    <div class="row justify-content-start align-items-center" style="margin-top: 20px; width: 100%;">
+        <div class="col-md-4">
+            <form action="/readers/add/" method="POST" class="d-flex">
+                {% csrf_token %}
+                <table class="table table-sm">
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle; padding-left: 15px;">Nome :</td>
+                        <td><input type="text" class="form-control form-control-sm" name="reader_name"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle; padding-left: 15px;">Contato :</td>
+                        <td><input type="text" class="form-control form-control-sm" name="reader_contact"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle; padding-left: 15px;">RA :</td>
+                        <td><input type="text" class="form-control form-control-sm" name="reader_ref_id"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle; padding-left: 15px;">Ano de Ensino :</td>
+                        <td><input type="text" class="form-control form-control-sm" name="grade_year"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div class="col-md-8">
+            <div class="row">
+                <nav class="navbar bg-body-light">
+                    <div class="container-fluid justify-content-center align-items-center">
+                        <form class="d-flex" role="search">
+                            <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-primary btn-sm" type="submit">Procurar</button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <p>{{ readers|length }} alunos cadastrados</p>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Ra</th>
+                            <th>Nome</th>
+                            <th>Contato</th>
+                            <th>Ano de Ensino</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reader in readers %}
+                        <tr>
+                            <td>{{ reader.reference_id }}</td>
+                            <td>
+                                {% if reader.active %}
+                                    <span class="btn btn-success btn-sm">{{ reader.reader_name }}</span>
+                                {% else %}
+                                    <span class="btn btn-secondary btn-sm">{{ reader.reader_name }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ reader.reader_contact }}</td>
+                            <td>{{ reader.grade_year }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

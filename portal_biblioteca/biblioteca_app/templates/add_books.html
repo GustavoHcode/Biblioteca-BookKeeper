@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
+    <div class="row justify-content-start align-items-center" style="margin-top: 50px; width: 100%;">
+        <div class="col-md-12">
+            <h4>Registre um novo livro</h4>
+        </div>
+    </div>
+
+    <div class="row justify-content-start align-items-center" style="margin-top: 20px; width: 100%;">
+        <div class="col-md-6">
+            <form id="addBookForm" name="addBookForm" method="POST" class="d-flex">
+                {% csrf_token %}
+                <table class="table table-sm">
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle; padding-left: 15px;">Nome do Livro :</td>
+                        <td><input type="text" class="form-control form-control-sm" id="book_name" name="book_name"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle; padding-left: 15px;">Autor :</td>
+                        <td><input type="text" class="form-control form-control-sm" id="author" name="author"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle; padding-left: 15px;">ISBN :</td>
+                        <td><input type="text" class="form-control form-control-sm" id="isbn" name="isbn"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="saveBookBtn" class="btn btn-primary btn-sm" type="submit">Salvar</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#addBookForm').submit(function(e) {
+        e.preventDefault();
+        
+        var book_name = $('#book_name').val();
+        var author = $('#author').val();
+        var isbn = $('#isbn').val();
+        
+        $.ajax({
+            type: "POST",
+            url: "/books/add/",
+            data: {
+                'book_name': book_name,
+                'author': author,
+                'isbn': isbn,
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(response) {
+                // Redirecionar para a página de visualização de livros após adicionar
+                window.location.href = "/books/";
+            },
+            error: function(error) {
+                console.log("Erro ao adicionar livro:", error);
+            }
+        });
+    });
+});
+</script>

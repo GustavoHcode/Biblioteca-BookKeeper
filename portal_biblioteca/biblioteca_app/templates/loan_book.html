@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Empréstimo de Livro</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="reader_id" class="form-label">Selecione o Leitor:</label>
+            <select class="form-select" id="reader_id" name="reader_id">
+                {% for reader in readers %}
+                    <option value="{{ reader.id }}">{{ reader.reader_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="book_id" class="form-label">Selecione o Livro:</label>
+            <select class="form-select" id="book_id" name="book_id">
+                {% for book in books %}
+                    {% if not book.borrowed %}
+                        <option value="{{ book.id }}">{{ book.book_name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Emprestar</button>
+    </form>
+</div>
+{% endblock %}

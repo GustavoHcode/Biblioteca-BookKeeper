@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
+    <div class="row justify-content-start align-items-center" style="margin-top: 50px; width: 100%;">
+        <div class="col-md-12">
+            <nav class="navbar bg-body-light">
+                <div class="container-fluid justify-content-center align-items-center">
+                    <form class="d-flex" role="search">
+                        <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-primary btn-sm" type="submit">Procurar</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row justify-content-start align-items-center" style="margin-top: 20px; width: 100%;">
+        <div class="col-md-12">
+            <div class="row" style="margin-top: 20px;">
+                <p>{{ books|length }} Livros registrados</p>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Nome do Livro</th>
+                            <th>Autor</th>
+                            <th>ISBN</th>
+                            <th>Emprestado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                        <tr>
+                            <td>{{ book.book_name }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.isbn }}</td>
+                            <td>
+                                {% if book.borrowed %}
+                                    <span class="btn btn-danger btn-sm">Sim</span>
+                                {% else %}
+                                    <span class="btn btn-success btn-sm">Não</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // código JavaScript para a funcionalidade de pesquisa pode ser adicionado aqui
+});
+</script>

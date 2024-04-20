@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="container-fluid">
+    <h2>Devolução de Livro</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="reader_name" class="form-label">Nome do Leitor:</label>
+            <input type="text" class="form-control" id="reader_name" value="{{ loan.reader.reader_name }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="book_name" class="form-label">Nome do Livro:</label>
+            <input type="text" class="form-control" id="book_name" value="{{ loan.book.book_name }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="return_date" class="form-label">Data de Devolução:</label>
+            <input type="date" class="form-control" id="return_date" name="return_date" value="{{ loan.return_date }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Confirmar Devolução</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <style> 
+        .my_label { 
+            color: red; 
+            font-size: 20px;
+        }
+        .my_secondary_label {
+            color: blue;
+            font-size: 20px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Gerenciamento da Biblioteca</title>
+</head>
+<body>
+
+    <h1>Bem Vindo A Biblioteca Escolar</h1>
+    <form method="POST" action="/save">
+        {% csrf_token %}
+        <table>
+        <tbody>
+             <tr>
+            <td><label class="my_label">Nome do estudante</label> </td>
+            <td><input type="text" name="nome_estudante"></td>
+             </tr>
+            <tr>
+                <td><label class="my_label my_secondary_label">Idade do estudante</label></td>
+                <td><input type="text" name="idade_estudante"></td>
+            </tr>
+            <tr> 
+                <td colspan="2"><button type="submit" style="background-color: green; color: white; display: block; margin-top: 15px; margin-bottom: 15px; font-size: 15px; width: 15%;">Save</button></td>
+
+
+            </tr>
+        </tbody>
+        </table>
+        
+        <br \>
+        
+        
+        
+    </form>
+    <a href="/multa">Multas</a>
+</body>
+</html>
