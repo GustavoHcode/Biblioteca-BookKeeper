@@ -1,31 +1,27 @@
 <!DOCTYPE html>
+<meta name="viewport" content="initial-scale=1"> 
 {% extends "index.html" %}
 {% load static %}
 
 {% block main_content %}
 
-<div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
-    <div class="row justify-content-start align-items-center" style="margin-top: 50px; width: 100%;">
-        <div class="col-md-12">
-            <nav class="navbar bg-body-light">
-                <div class="container-fluid justify-content-center align-items-center">
-                    <form class="d-flex" role="search">
-                        <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-primary btn-sm" type="submit">Procurar</button>
-                    </form>
-                </div>
-            </nav>
-        </div>
-    </div>
+<div id="search_css">
 
-    <div class="row justify-content-start align-items-center" style="margin-top: 20px; width: 100%;">
+            <nav class="navbar bg-body-light">
+                    <form class="d-flex" role="search">
+                        <input class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
+                        <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
+                    </form>
+            </nav>
+
         <div class="col-md-12">
-            <div class="row" style="margin-top: 20px;">
-                <p>{{ books|length }} Livros registrados</p>
+
+            <div  style="margin-top: 20px;">
+                <p style="color: #8B8DDB">{{ books|length }} Livros registrados</p>
             </div>
 
-            <div class="row" style="margin-top: 20px;">
-                <table class="table table-hover table-sm">
+            <div  style="margin-top: 20px;">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Nome do Livro</th>
@@ -53,8 +49,37 @@
                 </table>
             </div>
         </div>
-    </div>
+
 </div>
+
+
+<style>
+
+    body{
+        background: rgb(89,92,193);        
+    }
+
+    #btnsearch_css{
+        background-color: #E8CB71;
+        border: none;
+    }
+
+    #btnsearch_css:hover {
+        color: #fff;
+        background-color: #8B8DDB;
+    }
+
+    #search_css{
+        background-color: #ffffff;
+        align-items: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        padding: 20px 40px;
+        margin: 0.5em 2.5%;
+        width: 95%;
+        box-sizing:border-box;
+    }
+
+</style>
 
 {% endblock %}
 

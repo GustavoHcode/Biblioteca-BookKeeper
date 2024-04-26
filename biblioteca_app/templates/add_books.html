@@ -5,39 +5,112 @@
 {% block main_content %}
 
 <div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
-    <div class="row justify-content-start align-items-center" style="margin-top: 50px; width: 100%;">
-        <div class="col-md-12">
-            <h4>Registre um novo livro</h4>
-        </div>
-    </div>
 
-    <div class="row justify-content-start align-items-center" style="margin-top: 20px; width: 100%;">
-        <div class="col-md-6">
+            <h4>Registre um novo livro</h4>
+
+    <div id="register_css" class="row justify-content-start align-items-center">
+
             <form id="addBookForm" name="addBookForm" method="POST" class="d-flex">
                 {% csrf_token %}
-                <table class="table table-sm">
+                <table>
                     <tr>
                         <td style="text-align: left; vertical-align: middle; padding-left: 15px;">Nome do Livro :</td>
-                        <td><input type="text" class="form-control form-control-sm" id="book_name" name="book_name"></td>
+                        <td id="bisonhada"><input style="width: 560px; margin-bottom: 10px;" type="text" class="form-control form-control-sm" name="book_name"></td>
                     </tr>
                     <tr>
                         <td style="text-align: left; vertical-align: middle; padding-left: 15px;">Autor :</td>
-                        <td><input type="text" class="form-control form-control-sm" id="author" name="author"></td>
+                        <td id="bisonhada"><input style="width: 560px; margin-bottom: 10px;" type="text" class="form-control form-control-sm" name="author"></td>
                     </tr>
                     <tr>
                         <td style="text-align: left; vertical-align: middle; padding-left: 15px;">ISBN :</td>
-                        <td><input type="text" class="form-control form-control-sm" id="isbn" name="isbn"></td>
+                        <td id="bisonhada"><input style="width: 560px; margin-bottom: 10px;" type="text" class="form-control form-control-sm" name="isbn"></td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button id="saveBookBtn" class="btn btn-primary btn-sm" type="submit">Salvar</button>
+                            <button id="saveBookBtn" class="btn" type="submit">Salvar</button>
                         </td>
                     </tr>
                 </table>
             </form>
-        </div>
+
     </div>
 </div>
+
+<style>
+
+    body{
+        background: rgb(89,92,193);
+        background: linear-gradient(180deg, rgba(89,92,193,1) 0%, rgba(139,141,219,1) 100%);
+        
+    }
+
+    h4{
+        font-size: 35px;
+        border: none;
+        margin-top: 30px;
+        padding: 0 40px;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        background-color: #8B8DDB;
+        border-radius: 15px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        width: 800px;
+        text-align: center;
+        margin-bottom: -15px;
+    }
+
+    #bisonhada{
+        padding-left: 50px;     
+    }
+
+    #saveBookBtn{
+        background-color: #E8CB71;
+        margin-left: 91%;
+    }
+
+    #saveBookBtn:hover {
+        color: #fff;
+        background-color: #8B8DDB;
+    }
+
+    #btnsearch_css{
+        background-color: #E8CB71;
+        border: none;
+    }
+
+    #btnsearch_css:hover {
+        color: #fff;
+        background-color: #8B8DDB;
+    }
+
+
+    #register_css{
+        background-color: #ffffff;
+        border-radius: 25px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        margin: 1% 4px 4px;
+        margin-bottom: 50px;
+        display: flex;
+        position: relative;
+        align-items: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        height: 300px;
+        width: 800px;
+    }
+
+    #search_css{
+        background-color: #ffffff;
+        align-items: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        padding: 20px 40px;
+        margin: 0.5em 10px;
+        width: 100%;
+        box-sizing:border-box;
+    }
+
+</style>
 
 {% endblock %}
 
@@ -71,3 +144,5 @@ $(document).ready(function() {
     });
 });
 </script>
+
+

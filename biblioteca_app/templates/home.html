@@ -1,13 +1,47 @@
 <!DOCTYPE html>
+
 {% extends "index.html" %}
 {% load static %}
 
 {% block main_content %}
 <div class="jumbotron">
     <div class="container">
-        <img src="{% static '/escola_logo.png'%}" alt="#" Height="45" style="margin-right: 10px;">
-        <h1 class="display-4">Bem Vindo</h1>
+       <!-- <img src="{% static '/escola_logo.png'%}" alt="#" Height="45" style="margin-right: 10px;"> -->
+        <br>
+        <h1 class="display-4"><b>📖 Bem-Vindo!</b></h1><br>
+        
         <p>Este é um projeto de biblioteca web desenvolvido para escolas, focado em otimizar a gestão de dados pelas bibliotecárias. Ele permite o cadastro de alunos, controle de livros emprestados, registros de devoluções e monitoramento de atrasos.</p>
+        <br>
     </div>
 
+<style> 
+
+    body{
+
+        background: rgb(89,92,193);
+    }
+
+    #ico_book{
+        width: 5%;
+        display: inline-block;
+    }
+
+    p{
+        margin-left: 2%;
+    }
+
+    .container{
+        background-color: #ffffff;
+        border-radius: 25px;
+        margin: 2em auto;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .display-4{
+        font-style: normal;
+        color: #000000;
+        margin-left: 20px;
+    }
+
+</style>
 {% endblock %}

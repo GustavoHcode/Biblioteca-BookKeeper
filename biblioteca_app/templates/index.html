@@ -14,31 +14,32 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-<nav class="navbar bg-body-tertiary">
-    <div class="container-fluid justify-content-center align-items-center" style="background: #0000FF">
+<nav class="navbar">
+    <div class="container-fluid justify-content-center align-items-center"
+    style="background: rgb(2,0,36); background: linear-gradient(360deg, rgba(2,0,36,1) 0%, rgb(9, 9, 121) 50%, rgba(0,125,255,1) 100%);">
         <span class="navbar-brand lb-1 h3 text-light">
-            <img src="{% static '/escola_logo.png'%}" alt="#" Height="45" style="margin-right: 10px;">
-            Biblioteca
+            <img src="https://i.imgur.com/jzDTvb7.png" alt="#" height='60px'>
+            BookKeeper
         </span>
     </div>
 </nav>
 
 <div class="container-fluid d-flex justify-content-center align-items-center">
-    <ul class="nav nav-tabs">
+    <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link {% if current_tab == 'home' %}active{% endif %}" href="/home">Home</a>
+            <a class="nav-link {% if current_tab == 'home' %}active{% endif %}" href="/home">🏠 Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if current_tab == 'readers' %}active{% endif %}" href="/readers">Alunos</a>
+            <a class="nav-link {% if current_tab == 'readers' %}active{% endif %}" href="/readers">👥 Alunos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if current_tab == 'books' %}active{% endif %}" href="/books">Livros</a>
+            <a class="nav-link {% if current_tab == 'books' %}active{% endif %}" href="/books">📚 Livros</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if current_tab == 'returns' %}active{% endif %}" href="/returns">Devoluções</a>
+            <a class="nav-link {% if current_tab == 'returns' %}active{% endif %}" href="/returns">📥 Devoluções</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if current_tab == 'add_book' %}active{% endif %}" href="/books/add">Adicionar Livro</a>
+            <a class="nav-link {% if current_tab == 'add_book' %}active{% endif %}" href="/books/add">➕ Adicionar Livro</a>
         </li>
     </ul>
 </div>
@@ -54,6 +55,40 @@
         });
     });
 </script>
+
+<style>
+
+    .nav-item:hover {
+    background-color: #E8CB71;
+    }
+
+    .navbar{
+        margin-top: -10px;
+    }
+
+    .navbar-brand{
+        margin: 0.5em 10px;
+        font-size: 40px;
+    }
+
+    .nav-item{
+        background-color: #ffffff;
+        border-radius: 25px;
+        border-style: none;
+        margin: 1.6em 20px;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-link{
+        color: #23268E;
+        
+    }
+
+    
+
+</style>
+
+
 
 </body>
 </html>
