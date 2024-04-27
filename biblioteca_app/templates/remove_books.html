@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-4"><b>Remover Livro</b></h1><br>
+        <nav class="navbar bg-body-light">
+            <form class="d-flex" role="search">
+                <input class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
+                <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
+            </form>
+    </nav>
+
+        <ul>
+            {% for book in books %}
+                <li>{{ book.book_name }} - 
+                    <form action="{% url 'remove_book' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="book_id" value="{{ book.id }}">
+                        <button type="submit" class="btn btn-link text-danger">Remover</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+<style> 
+
+    body{
+        background: rgb(89,92,193);
+    }
+
+    .container{
+        background-color: #ffffff;
+        border-radius: 25px;
+        margin: 2em auto;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .display-4{
+        font-style: normal;
+        color: #000000;
+        margin-left: 20px;
+    }
+
+</style>
+{% endblock %}

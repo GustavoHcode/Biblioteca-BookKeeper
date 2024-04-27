@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-4"><b>Editar Livro</b></h1><br>
+        <nav class="navbar bg-body-light">
+            
+   </nav>
+
+  
+<h1>Editar Livro</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Atualizar Livro</button>
+    </form>
+
+
+    </div>
+
+<style> 
+
+    body{
+        background: rgb(89,92,193);
+    }
+
+    .container{
+        background-color: #ffffff;
+        border-radius: 25px;
+        margin: 2em auto;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .display-4{
+        font-style: normal;
+        color: #000000;
+        margin-left: 20px;
+    }
+
+</style>
+{% endblock %}
