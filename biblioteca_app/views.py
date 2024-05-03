@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
-from .models import Reader, Book
+from .models import Reader, Book, Loan
 from .forms import BookForm
 from .models import Book
+from datetime import datetime, timedelta
+from django.contrib import messages
+
 
 def home(request):
     return render(request, "home.html", context={"current_tab": "home"})
@@ -19,9 +22,6 @@ def books(request):
 
 def returns(request):
     return render(request, "returns.html", context={"current_tab": "returns"})
-
-def multa(request):
-    return HttpResponse("Consulte suas multas")
 
 def save_student(request):
     student_name = request.POST['student_name']
@@ -83,3 +83,48 @@ def edit_book_view(request, pk):
         form = BookForm(instance=book)
     
     return render(request, 'editbook.html', {'form': form})
+
+#Emprestimo de livros
+def loan_books(request):
+    if request.method == 'POST':
+        book_id = request.POST.get('book')
+        reader_id = request.POST.get('reader')
+        days = request.POST.get('days')
+
+        if not all([book_id, reader_id, days]):
+            messages.error(request, 'Todos os campos são obrigatórios.')
+            return redirect('loan_books')
+
+        try:
+            book = Book.objects.get(pk=book_id)
+            reader = Reader.objects.get(pk=reader_id)
+            days = int(days)
+        except (ValueError, Book.DoesNotExist, Reader.DoesNotExist):
+            messages.error(request, 'Livro ou leitor inválido.')
+            return redirect('loan_books')
+
+        if Loan.objects.filter(book=book, date_returned=None).exists():
+            messages.error(request, 'Este livro já está emprestado.')
+            return redirect('loan_books')
+
+        date_borrowed = datetime.now().date()
+        date_returned = date_borrowed + timedelta(days=days)
+
+        loan = Loan.objects.create(book=book, reader=reader, date_borrowed=date_borrowed, date_returned=date_returned)
+
+        messages.success(request, 'Empréstimo realizado com sucesso.')
+        return redirect('loan_books')
+
+    else:
+        # Passando os livros e leitores para o template
+        books = Book.objects.all()
+        readers = Reader.objects.all()
+        return render(request, 'loan_books.html', {'books': books, 'readers': readers})
+    
+
+    #lista de emprestimos 
+def view_loans(request):
+    print("Acessando a view view_loans")
+    loans = Loan.objects.all()
+    print("Empréstimos recuperados:", loans)
+    return render(request, 'returns.html', {'loans': loans})

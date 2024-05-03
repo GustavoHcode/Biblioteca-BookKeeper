@@ -27,3 +27,8 @@ class Book(models.Model):
         verbose_name = "Livro"
         verbose_name_plural = "Livros"
 
+class Loan(models.Model):
+    book = models.ForeignKey('Book', on_delete=models.CASCADE)
+    reader = models.ForeignKey('Reader', on_delete=models.CASCADE)
+    date_borrowed = models.DateField(auto_now_add=True)
+    date_returned = models.DateField(null=True, blank=True)

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
+
+    <h4>Realizar Empréstimo</h4>
+
+    <div id="loanForm" class="row justify-content-start align-items-center">
+
+        <form method="POST" class="d-flex">
+            {% csrf_token %}
+            <label for="book">Livro:</label>
+            <select name="book" id="book">
+                {% for book in books %}
+                    <option value="{{ book.id }}">{{ book.book_name }}</option>
+                {% endfor %}
+            </select>
+            <label for="reader">Leitor:</label>
+            <select name="reader" id="reader">
+                {% for reader in readers %}
+                    <option value="{{ reader.id }}">{{ reader.reader_name }}</option>
+                {% endfor %}
+            </select>
+            <label for="days">Número de dias:</label>
+            <input type="number" name="days" id="days">
+            <button type="submit">Realizar Empréstimo</button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#loanForm').submit(function(e) {
+        e.preventDefault();
+        
+        var book_id = $('#book').val();
+        var reader_id = $('#reader').val();
+        var days = $('#days').val();
+        
+        $.ajax({
+            type: "POST",
+            url: "{% url 'loan_books' %}", // Endpoint para realizar o empréstimo de livro
+            data: {
+                'book': book_id,
+                'reader': reader_id,
+                'days': days,
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(response) {
+                // Redirecionar para a página de visualização de empréstimos após realizar o empréstimo
+                window.location.href = "{% url 'returns' %}";
+            },
+            error: function(error) {
+                console.log("Erro ao realizar empréstimo:", error);
+            }
+        });
+    });
+});
+</script>
+

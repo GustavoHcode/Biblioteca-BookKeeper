@@ -47,6 +47,9 @@
         <li class="nav-item">
             <a class="nav-link {% if current_tab == 'add_book' %}active{% endif %}" href="{% url 'edit_book_list'%}">➕ Editar Livro</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'loan_books' %}active{% endif %}" href="{% url 'loan_books'%}">📚 Empréstimo de Livros</a>
+        </li>
     </ul>
 </div>
 

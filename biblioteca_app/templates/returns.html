@@ -1,9 +1,85 @@
 <!DOCTYPE html>
+<meta name="viewport" content="initial-scale=1"> 
 {% extends "index.html" %}
 {% load static %}
 
 {% block main_content %}
 
-<h1></h1>
+<div id="search_css">
+
+    <nav class="navbar bg-body-light">
+        <form class="d-flex" role="search">
+            <input class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
+            <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
+        </form>
+    </nav>
+
+    <div class="col-md-12">
+
+        <div  style="margin-top: 20px;">
+            <p style="color: #8B8DDB">{{ loans|length }} Empréstimos registrados</p>
+        </div>
+
+        <div  style="margin-top: 20px;">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome do Livro</th>
+                        <th>Aluno</th>
+                        <th>Data de Empréstimo</th>
+                        <th>Data de Devolução</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for loan in loans %}
+                    <tr>
+                        <td>{{ loan.book.book_name }}</td>
+                        <td>{{ loan.reader.reader_name }}</td>
+                        <td>{{ loan.date_borrowed }}</td>
+                        <td>{{ loan.date_returned }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+
+    body{
+        background: rgb(89,92,193);        
+    }
+
+    #btnsearch_css{
+        background-color: #E8CB71;
+        border: none;
+    }
+
+    #btnsearch_css:hover {
+        color: #fff;
+        background-color: #8B8DDB;
+    }
+
+    #search_css{
+        background-color: #ffffff;
+        align-items: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        padding: 20px 40px;
+        margin: 0.5em 2.5%;
+        width: 95%;
+        box-sizing:border-box;
+    }
+
+</style>
 
 {% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // código JavaScript para a funcionalidade de pesquisa pode ser adicionado aqui
+});
+</script>

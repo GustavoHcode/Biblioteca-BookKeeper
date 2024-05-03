@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Livros Emprestados</title>
+</head>
+<body>
+    <h2>Livros Emprestados</h2>
+    <ul>
+        {% for loan in loans %}
+        <li>{{ loan.book.title }} - {{ loan.borrower.username }} - {{ loan.borrow_date }} - {{ loan.due_date }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
