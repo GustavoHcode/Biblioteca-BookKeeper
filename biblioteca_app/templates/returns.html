@@ -8,8 +8,8 @@
 <div id="search_css">
 
     <nav class="navbar bg-body-light">
-        <form class="d-flex" role="search">
-            <input class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
+        <form id="search-form" class="d-flex" role="search">
+            <input id="search-input" class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros ou alunos" aria-label="Search">
             <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
         </form>
     </nav>
@@ -21,7 +21,7 @@
         </div>
 
         <div  style="margin-top: 20px;">
-            <table class="table table-hover">
+            <table class="table table-hover" id="loanTable">
                 <thead>
                     <tr>
                         <th>Nome do Livro</th>
@@ -45,7 +45,6 @@
     </div>
 
 </div>
-
 
 <style>
 
@@ -75,11 +74,26 @@
 
 </style>
 
-{% endblock %}
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-    // código JavaScript para a funcionalidade de pesquisa pode ser adicionado aqui
+    $('#search-form').submit(function(event) {
+        event.preventDefault();
+
+        var searchTerm = $('#search-input').val().toUpperCase();
+
+        $('#loanTable tbody tr').each(function() {
+            var bookName = $(this).find('td:eq(0)').text().toUpperCase();
+            var readerName = $(this).find('td:eq(1)').text().toUpperCase();
+            
+            if (bookName.includes(searchTerm) || readerName.includes(searchTerm)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
 });
 </script>
+
+{% endblock %}

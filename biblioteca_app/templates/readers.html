@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
- <meta name="viewport" content="initial-scale=1"> 
+    <meta name="viewport" content="initial-scale=1"> 
 </head>
 {% extends "index.html" %}
 {% load static %}
@@ -50,8 +50,8 @@
             <div class="row">
                 <nav class="navbar bg-body-light">
                     <div class="container-fluid justify-content-center align-items-center">
-                        <form class="d-flex" role="search">
-                            <input class="form-control form-control-sm me-2 col-md-10" style="width: 1300px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar alunos" aria-label="Search">
+                        <form id="search-form" class="d-flex" role="search">
+                            <input id="search-input" class="form-control form-control-sm me-2 col-md-10" style="width: 1300px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar alunos" aria-label="Search">
                             <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
                         </form>
                     </div>
@@ -72,7 +72,7 @@
                             <th>Ano de Ensino</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="readerTableBody">
                         {% for reader in readers %}
                         <tr>
                             <td>{{ reader.reference_id }}</td>
@@ -168,5 +168,23 @@
     }
 
 </style>
+
+<script>
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        var searchTerm = document.getElementById('search-input').value.toUpperCase();
+        var readerRows = document.querySelectorAll('#readerTableBody tr');
+    
+        readerRows.forEach(function(row) {
+            var readerName = row.querySelector('td:nth-child(2)').textContent.toUpperCase();
+            if (readerName.indexOf(searchTerm) > -1) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+</script>
 
 {% endblock %}

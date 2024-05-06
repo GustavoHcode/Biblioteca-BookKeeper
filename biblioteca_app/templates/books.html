@@ -7,51 +7,50 @@
 
 <div id="search_css">
 
-            <nav class="navbar bg-body-light">
-                    <form class="d-flex" role="search">
-                        <input class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
-                        <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
-                    </form>
-            </nav>
+    <nav class="navbar bg-body-light">
+        <form id="search-form" class="d-flex" role="search">
+            <input id="search-input" class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
+            <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
+        </form>        
+    </nav>
 
-        <div class="col-md-12">
+    <div class="col-md-12">
 
-            <div  style="margin-top: 20px;">
-                <p style="color: #8B8DDB">{{ books|length }} Livros registrados</p>
-            </div>
-
-            <div  style="margin-top: 20px;">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nome do Livro</th>
-                            <th>Autor</th>
-                            <th>ISBN</th>
-                            <th>Emprestado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for book in books %}
-                        <tr>
-                            <td>{{ book.book_name }}</td>
-                            <td>{{ book.author }}</td>
-                            <td>{{ book.isbn }}</td>
-                            <td>
-                                {% if book.borrowed %}
-                                    <span class="btn btn-danger btn-sm">Sim</span>
-                                {% else %}
-                                    <span class="btn btn-success btn-sm">Não</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+        <div  style="margin-top: 20px;">
+            <p style="color: #8B8DDB">{{ books|length }} Livros registrados</p>
         </div>
 
-</div>
+        <div  style="margin-top: 20px;">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome do Livro</th>
+                        <th>Autor</th>
+                        <th>ISBN</th>
+                        <th>Emprestado</th>
+                    </tr>
+                </thead>
+                <tbody id="bookTableBody">
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.book_name }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.isbn }}</td>
+                        <td>
+                            {% if book.borrowed %}
+                                <span class="btn btn-danger btn-sm">Sim</span>
+                            {% else %}
+                                <span class="btn btn-success btn-sm">Não</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+</div>
 
 <style>
 
@@ -81,11 +80,22 @@
 
 </style>
 
-{% endblock %}
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    // código JavaScript para a funcionalidade de pesquisa pode ser adicionado aqui
-});
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+        var searchTerm = document.getElementById('search-input').value.toUpperCase();
+        var bookRows = document.querySelectorAll('#bookTableBody tr');
+    
+        bookRows.forEach(function(row) {
+            var bookName = row.querySelector('td:first-child').textContent.toUpperCase();
+            if (bookName.indexOf(searchTerm) > -1) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
 </script>
+
+{% endblock %}
