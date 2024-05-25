@@ -6,27 +6,37 @@
 
 <div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
 
-    <h4>Realizar Empréstimo</h4>
+    <h4 style="color: #007bff;">Realizar Empréstimo</h4>
 
     <div id="loanForm" class="row justify-content-start align-items-center">
 
         <form method="POST" class="d-flex">
             {% csrf_token %}
-            <label for="book">Livro:</label>
-            <select name="book" id="book">
-                {% for book in books %}
-                    <option value="{{ book.id }}">{{ book.book_name }}</option>
-                {% endfor %}
-            </select>
-            <label for="reader">Leitor:</label>
-            <select name="reader" id="reader">
-                {% for reader in readers %}
-                    <option value="{{ reader.id }}">{{ reader.reader_name }}</option>
-                {% endfor %}
-            </select>
-            <label for="days">Número de dias:</label>
-            <input type="number" name="days" id="days">
-            <button type="submit">Realizar Empréstimo</button>
+            <table>
+                <tr>
+                    <td><label for="book" style="color: #333;">Livro:</label></td>
+                    <td><select name="book" id="book">
+                        {% for book in books %}
+                            <option value="{{ book.id }}">{{ book.book_name }}</option>
+                        {% endfor %}
+                    </select></td>
+                </tr>
+                <tr>
+                    <td><label for="reader" style="color: #333;">Leitor:</label></td>
+                    <td><select name="reader" id="reader">
+                        {% for reader in readers %}
+                            <option value="{{ reader.id }}">{{ reader.reader_name }}</option>
+                        {% endfor %}
+                    </select></td>
+                </tr>
+                <tr>
+                    <td><label for="days" style="color: #333;">Número de dias:</label></td>
+                    <td><input type="number" name="days" id="days"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><button type="submit" class="btn btn-primary">Realizar Empréstimo</button></td>
+                </tr>
+            </table>
         </form>
 
     </div>
@@ -65,3 +75,35 @@ $(document).ready(function() {
 });
 </script>
 
+<style>
+/* Estilo para o container principal */
+.container-fluid {
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+/* Estilo para o título */
+h4 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Estilo para os rótulos */
+label {
+    margin-right: 10px;
+}
+
+/* Estilo para as caixas de seleção e entrada */
+select, input[type="number"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Estilo para o botão de submit */
+button[type="submit"] {
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
