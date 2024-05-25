@@ -5,20 +5,16 @@
 
 {% block main_content %}
 
-<div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
-
-    <div class="row justify-content-start align-items-center">
-
 <div id="search_css">
 
-
-        <form class="d-flex" role="search">
-            <input class="form-control form-control-sm me-2" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
+    <nav class="navbar bg-body-light">
+        <form id="search-form" class="d-flex" role="search">
+            <input id="search-input" class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
             <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
-        </form>
+        </form>        
+    </nav>
 
-                    
-        <div class="col-md-12">
+    <div class="col-md-12">
 
         <div  style="margin-top: 20px;">
             <p style="color: #8B8DDB">{{ books|length }} Livros registrados</p>
@@ -55,13 +51,11 @@
     </div>
 
 </div>
-</div>
+
 <style>
 
-body{
-        background: rgb(89,92,193);
-        background: linear-gradient(180deg, rgba(89,92,193,1) 0%, rgba(139,141,219,1) 100%);
-        
+    body{
+        background: rgb(89,92,193);        
     }
 
     #btnsearch_css{
@@ -83,8 +77,6 @@ body{
         width: 95%;
         box-sizing:border-box;
     }
-
-    
 
 </style>
 
