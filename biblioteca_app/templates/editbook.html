@@ -4,41 +4,86 @@
 {% load static %}
 
 {% block main_content %}
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-4"><b>Editar Livro</b></h1><br>
-        <nav class="navbar bg-body-light">
-            
-   </nav>
+<div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
 
   
-<h1>Editar Livro</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Atualizar Livro</button>
+<h4>Editar Livro</h4>
+
+<div id="register_css" class="row justify-content-start align-items-center">
+
+    <form method="POST" class="d-flex">
+
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="d-flex flex-row">
+            <button id="saveBookBtn" type="submit" class="btn">Atualizar Livro</button>
+            </div>
+
+
     </form>
 
 
     </div>
+</div>
 
 <style> 
 
+    #saveBookBtn{
+        background-color: #E8CB71;
+    }
+
+    #saveBookBtn:hover {
+        color: #fff;
+        background-color: #8B8DDB;
+    }
+
+    body{
+        background: rgb(89,92,193);        
+    }
+
+    #btnsearch_css{
+        background-color: #E8CB71;
+        border: none;
+    }
+
+    #btnsearch_css:hover {
+        color: #fff;
+        background-color: #8B8DDB;
+    }
+
     body{
         background: rgb(89,92,193);
+        background: linear-gradient(180deg, rgba(89,92,193,1) 0%, rgba(139,141,219,1) 100%);
+        
     }
 
-    .container{
+    h4{
+        font-size: 35px;
+        border: none;
+        margin-top: 30px;
+        padding: 0 40px;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        background-color: #8B8DDB;
+        border-radius: 15px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        width: 800px;
+        text-align: center;
+        margin-bottom: -15px;
+    }
+
+    #register_css{
         background-color: #ffffff;
         border-radius: 25px;
-        margin: 2em auto;
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    }
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        margin: 1% 4px 4px;
 
-    .display-4{
-        font-style: normal;
-        color: #000000;
-        margin-left: 20px;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        height: 200px;
+        width: 800px;
     }
 
 </style>
