@@ -42,8 +42,21 @@
         <li class="nav-item">
             <a class="nav-link {% if current_tab == 'returns' %}active{% endif %}" href="/returns">📥 Devoluções</a>
         </li>
+
+        <li class="nav-item"></li>
+
         <li class="nav-item">
+<<<<<<< HEAD
             <a class="nav-link {% if current_tab == 'loan_books' %}active{% endif %}" href="{% url 'loan_books'%}">📚 Empréstimo de Livros</a>
+=======
+            <a class="nav-link {% if current_tab == 'add_book' %}active{% endif %}" href="/books/add">➕ Adicionar Livro</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'add_book' %}active{% endif %}" href="{% url 'remove_book' %}">➖ Remover Livro</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'add_book' %}active{% endif %}" href="{% url 'edit_book_list'%}">⚙️ Editar Livro</a>
+>>>>>>> 8902032c9de7f16c0f16ba9c28c5f7c28ac83cda
         </li>
     </ul>
 </div>
