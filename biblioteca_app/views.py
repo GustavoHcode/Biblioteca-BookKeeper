@@ -3,11 +3,11 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
 from .models import Reader, Book, Loan
-from .forms import BookForm
+from .forms import BookForm, ContactForm
 from .models import Book
 from datetime import datetime, timedelta
-from django.contrib import messages
-
+from django.contrib import messages 
+from django.core.mail import EmailMessage
 
 def home(request):
     return render(request, "home.html", context={"current_tab": "home"})
@@ -128,3 +128,38 @@ def view_loans(request):
     loans = Loan.objects.all()
     print("Empréstimos recuperados:", loans)
     return render(request, 'returns.html', {'loans': loans})
+
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        
+        if form.is_valid():
+            name = form.cleaned_data['Nome']
+            email = form.cleaned_data['Email']
+            message = form.cleaned_data['Mensagem']
+
+            try:
+                # Envio do e-mail
+                EmailMessage(
+                    subject='Contact Form Submission from {}'.format(name),
+                    body=message,
+                    from_email='sandbox.smtp.mailtrap.io',  
+                    to=['sandbox.smtp.mailtrap.io'],  
+                    reply_to=[email]
+                ).send()
+
+                return redirect('success')
+
+            except Exception as e:
+                print(f'Error sending email: {e}')  
+                return render(request, 'contact.html', {'form': form, 'error': 'Falha ao enviar e-mail. Por favor, tente novamente.'})
+
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form})
+
+def success(request):
+    return HttpResponse('Seu problema foi enviado com sucesso!')

@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
-from .views import home, save_student, readers, books, save_readers, add_book, remove_book, edit_book_list_view, edit_book_view, loan_books, view_loans
-
+from .views import home, save_student, readers, books, save_readers, add_book, remove_book, edit_book_list_view, edit_book_view, loan_books, view_loans, contact, success
 urlpatterns = [
     path('', RedirectView.as_view(url='/home/', permanent=False), name='index'),
     path('home/', home, name='home'),
@@ -16,4 +15,6 @@ urlpatterns = [
     path('editbook/<int:pk>/', edit_book_view, name='edit_book'),
     path('loan_books/', loan_books, name='loan_books'),
     path('returns/', view_loans, name='returns'),
+    path('contact/', contact, name='contact'),
+    path('success/', success, name='success'),
 ]
