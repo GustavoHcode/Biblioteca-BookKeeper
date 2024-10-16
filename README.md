@@ -1,1 +1,1 @@
-Devido à ausência de imagens, a pasta 'static' não está sendo importada para o GitHub. No entanto, caso alguém deseje acessá-la, ela foi criada como um diretório dentro do aplicativo 'biblioteca_app'.
+Caso tentem enviar um ticket e não apareça a mensagem confirmando que seu problema foi enviado, por favor me informem para que eu possa verificar o problema.
