@@ -102,6 +102,7 @@
             <button class="btn" id="increaseFont" title="Aumentar Fonte">🔍 +</button>
             <button class="btn" id="decreaseFont" title="Diminuir Fonte">🔍 -</button>
             <button class="btn" id="toggleTheme" title="Alternar Tema">🌙</button>
+            <button class="btn" id="btn-ler" title="Ler em Voz Alta">🎤</button>
         </div>
     </div>
 </nav>
@@ -186,25 +187,19 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light'); // Salva a preferência
         });
 
-        // Função para o leitor de voz
-        const synth = window.speechSynthesis;
-        const readTextButton = document.getElementById('readText');
+        // Função para ler o conteúdo da página
+        function lerTexto() {
+            const texto = document.body.innerText; 
+            const utterance = new SpeechSynthesisUtterance(texto); 
+            utterance.lang = 'pt-BR'; 
+            window.speechSynthesis.speak(utterance); 
+        }
 
-        readTextButton.addEventListener('click', function() {
-            const selectedText = window.getSelection().toString(); // Verifica se algum texto foi selecionado
-            let textToRead = selectedText || document.body.innerText; // Lê o texto selecionado ou todo o conteúdo da página
-            
-            // Configura o leitor de voz
-            if (textToRead) {
-                const utterance = new SpeechSynthesisUtterance(textToRead);
-                utterance.lang = 'pt-BR'; // Define o idioma para português brasileiro
-                synth.speak(utterance);
-            } else {
-                alert('Nenhum texto selecionado para ler.');
-            }
-        });
+       
+        document.getElementById('btn-ler').addEventListener('click', lerTexto);
     });
 </script>
+
 
 </body>
 </html>
