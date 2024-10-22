@@ -13,18 +13,18 @@
         }
         /* Estilos padrão (claro) */
         body {
-            background-color: white; /* Cor de fundo clara */
-            color: black; /* Cor do texto padrão */
+            background-color: white; 
+            color: black; 
         }
 
         /* Estilos para o modo escuro */
         body.dark-theme {
-            background-color: #121212; /* Cor de fundo escura */
-            color: #e0e0e0; /* Cor do texto no modo escuro */
+            background-color: #121212; 
+            color: #a9a9a9; 
         }
 
         body.dark-theme p {
-            color: #e0e0e0; /* Garante que o texto dos parágrafos fique visível no modo escuro */
+            color: #a9a9a9; 
         }
 
         /* Estilos da Navbar */
@@ -66,21 +66,21 @@
             color: #23268E;
         }
         .font-controls {
-            margin-left: 20px; /* Adiciona espaço entre o título e os ícones */
+            margin-left: 20px; 
         }
 
         /* Estilos para os botões de ajuste de fonte */
         .btn {
-            font-size: 20px; /* Aumenta o tamanho da fonte */
-            padding: 10px; /* Aumenta o espaçamento interno do botão */
-            border-radius: 5px; /* Arredonda os cantos do botão */
-            color: white; /* Cor do texto do botão */
-            background-color: #007bff; /* Cor de fundo do botão */
-            transition: background-color 0.3s; /* Adiciona uma transição suave */
+            font-size: 20px; 
+            padding: 10px; 
+            border-radius: 5px; 
+            color: white; 
+            background-color: #007bff; 
+            transition: background-color 0.3s; 
         }
 
         .btn:hover {
-            background-color: #0056b3; /* Cor do botão ao passar o mouse */
+            background-color: #0056b3; 
         }
     </style>
 </head>
@@ -150,7 +150,7 @@
         });
 
         const content = document.body;
-        let currentFontSize = 16; // Tamanho padrão da fonte
+        let currentFontSize = 16; 
 
         // Carregar o tema do localStorage
         const savedTheme = localStorage.getItem('theme');
@@ -170,21 +170,20 @@
         $('#increaseFont').on('click', function() {
             currentFontSize += 2; // Aumenta 2px
             content.style.fontSize = currentFontSize + 'px';
-            localStorage.setItem('fontSize', currentFontSize); // Salva a preferência
+            localStorage.setItem('fontSize', currentFontSize); 
         });
 
         // Diminuir fonte
         $('#decreaseFont').on('click', function() {
-            currentFontSize = Math.max(currentFontSize - 2, 10); // Diminui 2px, mínimo de 10px
-            content.style.fontSize = currentFontSize + 'px';
-            localStorage.setItem('fontSize', currentFontSize); // Salva a preferência
+            currentFontSize = Math.max(currentFontSize - 2, 10); 
+            localStorage.setItem('fontSize', currentFontSize); 
         });
 
         // Alternar tema
         $('#toggleTheme').on('click', function() {
             const isDark = content.classList.toggle('dark-theme');
             content.classList.toggle('light-theme', !isDark);
-            localStorage.setItem('theme', isDark ? 'dark' : 'light'); // Salva a preferência
+            localStorage.setItem('theme', isDark ? 'dark' : 'light'); 
         });
 
         // Função para ler o conteúdo da página
