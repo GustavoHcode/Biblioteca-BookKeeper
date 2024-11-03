@@ -16,35 +16,35 @@
             <button id="btnsearch_css" class="btn" type="submit">Procurar</button>
         </form>
 
-        <div class="col-md-12">
-
+        <div class="col-md-12" style="margin-top: 20px;">
             <table class="table table-hover">
-                <tr>
+                <tbody>
                 {% for book in books %}
-                    <td>
-                        ㅤ📖ㅤ{{ book.book_name }}
-                    </td>
-                    <td>
-                        <form action="{% url 'remove_book' %}" method="post"> {% csrf_token %}
-                            <input type="hidden" name="book_id" value="{{ book.id }}">
-                            <button type="submit" class="btn btn-danger btn-sm"> Remover </button>  
-                        </form>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            ㅤ📖ㅤ{{ book.book_name }}
+                        </td>
+                        <td>
+                            <form action="{% url 'remove_book' %}" method="post"> {% csrf_token %}
+                                <input type="hidden" name="book_id" value="{{ book.id }}">
+                                <button type="submit" class="btn btn-danger btn-sm"> Remover </button>  
+                            </form>
+                        </td>
+                    </tr>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
    
-    </div>
+</div>
+
 <style> 
-
-
-body{
+    body {
         background: rgb(89,92,193);        
     }
 
-    #btnsearch_css{
+    #btnsearch_css {
         background-color: #E8CB71;
         border: none;
     }
@@ -54,7 +54,7 @@ body{
         background-color: #8B8DDB;
     }
 
-    h4{
+    h4 {
         font-size: 35px;
         border: none;
         margin-top: 30px;
@@ -70,8 +70,7 @@ body{
         margin-bottom: -15px;
     }
 
-
-    #register_css{
+    #register_css {
         background-color: #ffffff;
         border-radius: 25px;
         border-top-left-radius: 0px;
@@ -79,14 +78,30 @@ body{
         margin: 1% 4px 4px;
         margin-bottom: 50px;
         display: flex;
+        flex-direction: column; /* Permite que a tabela ocupe o espaço corretamente */
         position: relative;
         align-items: center;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        height: 300px;
+        padding: 20px; /* Adiciona espaço interno */
         width: 800px;
     }
 
- 
+    /* Estilo para os botões "Remover" */
+    .btn-danger {
+        background-color: red; /* Cor de fundo vermelha */
+        border-color: red; /* Cor da borda vermelha */
+        color: white; /* Cor do texto branca */
+    }
 
+    .btn-danger:hover {
+        background-color: darkred; /* Cor de fundo vermelha mais escura no hover */
+        border-color: darkred; /* Cor da borda vermelha mais escura no hover */
+    }
+
+    /* Estilo para a tabela */
+    .table {
+        width: 100%; /* Garante que a tabela ocupe toda a largura do contêiner */
+    }
 </style>
+
 {% endblock %}
