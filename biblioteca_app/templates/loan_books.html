@@ -6,35 +6,43 @@
 
 <div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
 
-    <h4 style="color: #007bff;">Realizar Empréstimo</h4>
+    <h4>Realizar Empréstimo</h4>
 
     <div id="loanForm" class="row justify-content-start align-items-center">
 
         <form method="POST" class="d-flex">
             {% csrf_token %}
-            <table>
+            <table style="width: 100%;">
                 <tr>
-                    <td><label for="book" style="color: #333;">Livro:</label></td>
-                    <td><select name="book" id="book">
-                        {% for book in books %}
-                            <option value="{{ book.id }}">{{ book.book_name }}</option>
-                        {% endfor %}
-                    </select></td>
+                    <td style="text-align: left; vertical-align: middle; padding: 7px;">Livro:</td>
+                    <td id="bisonhada" style="padding: 7px;">
+                        <select name="book" id="book" class="form-control form-control-sm">
+                            {% for book in books %}
+                                <option value="{{ book.id }}">{{ book.book_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="reader" style="color: #333;">Leitor:</label></td>
-                    <td><select name="reader" id="reader">
-                        {% for reader in readers %}
-                            <option value="{{ reader.id }}">{{ reader.reader_name }}</option>
-                        {% endfor %}
-                    </select></td>
+                    <td style="text-align: left; vertical-align: middle; padding: 7px;">Leitor:</td>
+                    <td id="bisonhada" style="padding: 7px;">
+                        <select name="reader" id="reader" class="form-control form-control-sm">
+                            {% for reader in readers %}
+                                <option value="{{ reader.id }}">{{ reader.reader_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="days" style="color: #333;">Número de dias:</label></td>
-                    <td><input type="number" name="days" id="days"></td>
+                    <td style="text-align: left; vertical-align: middle; padding: 7px;">Número de dias:</td>
+                    <td id="bisonhada" style="padding: 7px;">
+                        <input type="number" name="days" id="days" class="form-control form-control-sm" style="width: 100%; margin-bottom: 10px;">
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="text-align: center;"><button type="submit" class="btn btn-primary">Realizar Empréstimo</button></td>
+                    <td colspan="2" style="text-align: right;">
+                        <button type="submit" class="btn" id="saveLoanBtn">Efetuar Operação</button>
+                    </td>
                 </tr>
             </table>
         </form>
@@ -42,7 +50,57 @@
     </div>
 </div>
 
-{% endblock %}
+<style>
+    body {
+        background: rgb(89, 92, 193);
+    }
+
+    h4 {
+        font-size: 35px;
+        border: none;
+        margin-top: 30px;
+        padding: 0 40px;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        background-color: #8B8DDB;
+        border-radius: 15px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        width: 800px;
+        text-align: center;
+        margin-bottom: -15px;
+    }
+
+    #bisonhada {
+        padding-left: 0;     
+    }
+
+    #saveLoanBtn {
+        background-color: #E8CB71;
+        margin-left: 10px; /* Adiciona um espaço entre o campo e o botão */
+    }
+
+    #saveLoanBtn:hover {
+        color: #fff;
+        background-color: #8B8DDB;
+    }
+
+    #loanForm {
+        background-color: #ffffff;
+        border-radius: 25px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        margin: 1% 4px 4px;
+        margin-bottom: 50px;
+        display: flex;
+        position: relative;
+        align-items: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        height: 300px;
+        width: 800px;
+        padding: 20px;
+    }
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -75,35 +133,4 @@ $(document).ready(function() {
 });
 </script>
 
-<style>
-/* Estilo para o container principal */
-.container-fluid {
-    background-color: #f2f2f2;
-    padding: 20px;
-}
-
-/* Estilo para o título */
-h4 {
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-
-/* Estilo para os rótulos */
-label {
-    margin-right: 10px;
-}
-
-/* Estilo para as caixas de seleção e entrada */
-select, input[type="number"] {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-/* Estilo para o botão de submit */
-button[type="submit"] {
-    padding: 8px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-</style>
+{% endblock %}

@@ -54,12 +54,20 @@
             box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             padding: 10px;
             z-index: 1;
+            white-space: nowrap; /* Impede quebra de linha */
+            min-width: 150px; /* Define uma largura mínima para o submenu */
         }
         .submenu.show {
             display: block;
         }
         .submenu li {
             list-style-type: none;
+            padding: 8px 10px; /* Aumenta o espaçamento interno */
+            border-bottom: 1px solid #d3d3d3; /* Adiciona uma linha cinza clara */
+            margin-bottom: 5px; /* Adiciona espaçamento entre os itens */
+        }
+        .submenu li:last-child {
+            border-bottom: none; /* Remove a linha do último item */
         }
         .submenu li a {
             text-decoration: none;
@@ -137,12 +145,7 @@
 <p>Este é um projeto de biblioteca web desenvolvido para escolas, focado em otimizar a gestão de dados pelas bibliotecárias. Ele permite o cadastro de alunos, controle de livros emprestados, registros de devoluções e monitoramento de atrasos.</p>
 {% endblock %}
 
-<!-- Botão de texto modificado para imagem /ᐠ - ˕ -マ Ⳋ
-<a href="{% url 'contact' %}" class="btn btn-primary" id="support-button" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-    Fale Conosco
-</a>
--->
-
+<!-- Botão de texto modificado para imagem -->
 <a href="{% url 'contact' %}" id="support-button" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
     <img src="https://i.imgur.com/IGvBvFq.png" alt="Fale Conosco" style="width: 50px; height: auto;">
 </a>
@@ -168,8 +171,6 @@
         transition: opacity 0.3s ease; /* Transição suave */
     }
 </style>
-
-
 
 <script>
     $(document).ready(function(){
@@ -227,7 +228,6 @@
         document.getElementById('btn-ler').addEventListener('click', lerTexto);
     });
 </script>
-
 
 </body>
 </html>
