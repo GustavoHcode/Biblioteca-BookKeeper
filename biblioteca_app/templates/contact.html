@@ -1,9 +1,138 @@
 {% if error %}
-    <div class="alert alert-danger">{{ error }}</div>
+    <div class="errorlist">{{ error }}</div>
 {% endif %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Enviar</button>
-</form>
+<div class="container-fluid d-flex flex-column align-items-center" style="height: 100vh;">
+
+    <div id="register_css" class="row justify-content-start align-items-center">
+        <h4 style="text-align: center;">🧏🏻 Fale Conosco 💬</h4>
+        <br>
+        <form method="POST" class="d-flex" style="background-color: transparent;">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="d-flex flex-row">
+                <button type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style> 
+    label {
+        font-size: 20px;
+        color: #333;
+        font-weight: bold; 
+        margin-bottom: 5px; 
+        display: block; 
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    body {
+        background: rgb(89, 92, 193);
+        background: linear-gradient(180deg, rgba(89, 92, 193, 1) 0%, rgba(139, 141, 219, 1) 100%);
+        background-size: 300% 300%; 
+        animation: gradientMove 5s ease infinite;
+    }
+    
+    @keyframes gradientMove {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    h4 {
+        font-size: 35px;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        background-color: #8B8DDB;
+        width: 100%; /* Ajusta para preencher toda a largura do contêiner */
+        text-align: center;
+        margin: 0;
+        padding: 10px;
+    }
+
+    #register_css {
+        padding-top: 20px;
+        background-color: #ffffff;
+        margin: 0 auto; /* Centraliza horizontalmente */
+        margin-top: 10px; /* Espaço entre o título e o formulário */
+        text-align: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        padding: 20px; /* Espaçamento interno ajustável */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%; /* Mudado para 100% para que se ajuste ao contêiner pai */
+        max-width: 600px; /* Largura máxima igual à do h4 */
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+        background-color: #ffffff;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        margin: 0.5em 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        border: 1px solid #ccc; 
+        border-radius: 4px;
+    }
+
+    /* Estilos Específicos para a Textarea */
+    textarea {
+        max-width: 100%; /* Limita a largura máxima da textarea */
+        resize: none; /* Impede que o usuário redimensione a textarea */
+        overflow: auto; /* Permite rolagem se o texto for maior que a altura da textarea */
+    }
+
+    @keyframes flash {
+        0%, 100% {
+            opacity: 1; /* Totalmente visível */
+        }
+        50% {
+            opacity: 0; /* Invisível */
+        }
+    }
+    
+    .errorlist {
+        background-color: red; /* Cor de fundo vermelha */
+        color: white; /* Cor do texto branca */
+        padding: 10px; /* Espaçamento interno */
+        border-radius: 5px; /* Bordas arredondadas */
+        text-align: center; /* Centraliza o texto */
+        width: 100%; /* Ocupa 100% da largura do container pai */
+        max-width: 600px; /* Limita a largura máxima */
+        margin: 10px auto; /* Centraliza horizontalmente */
+        animation: flash 1s ease-in-out 1; /* Adiciona a animação de flash */
+    }
+
+    .errorlist li {
+        margin: 0; /* Remove margens de itens individuais */
+    }
+
+</style>

@@ -137,9 +137,38 @@
 <p>Este é um projeto de biblioteca web desenvolvido para escolas, focado em otimizar a gestão de dados pelas bibliotecárias. Ele permite o cadastro de alunos, controle de livros emprestados, registros de devoluções e monitoramento de atrasos.</p>
 {% endblock %}
 
+<!-- Botão de texto modificado para imagem /ᐠ - ˕ -マ Ⳋ
 <a href="{% url 'contact' %}" class="btn btn-primary" id="support-button" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
     Fale Conosco
 </a>
+-->
+
+<a href="{% url 'contact' %}" id="support-button" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <img src="https://i.imgur.com/IGvBvFq.png" alt="Fale Conosco" style="width: 50px; height: auto;">
+</a>
+
+<style>
+    #support-button img {
+        width: 50px; /* Ajuste o tamanho da imagem */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+    
+    #support-button {
+        display: flex; /* Permite que a imagem fique centralizada se necessário */
+        justify-content: center; /* Centraliza horizontalmente */
+        align-items: center; /* Centraliza verticalmente */
+        text-decoration: none; /* Remove o sublinhado */
+        background-color: transparent; /* Define o fundo como transparente */
+        border: none; /* Remove qualquer borda */
+        cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    }
+
+    #support-button:hover img {
+        opacity: 0.8; /* Faz a imagem parecer um pouco transparente ao passar o mouse */
+        transition: opacity 0.3s ease; /* Transição suave */
+    }
+</style>
+
 
 
 <script>
