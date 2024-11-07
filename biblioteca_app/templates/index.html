@@ -204,11 +204,11 @@
         });
 
         // Diminuir fonte
-        $('#decreaseFont').on('click', function() {
-            currentFontSize = Math.max(currentFontSize - 2, 10); 
-            localStorage.setItem('fontSize', currentFontSize); 
-        });
-
+$('#decreaseFont').on('click', function() {
+    currentFontSize = Math.max(currentFontSize - 2, 10);
+    $('body').css('font-size', currentFontSize + 'px');
+    localStorage.setItem('fontSize', currentFontSize); 
+    });
         // Alternar tema
         $('#toggleTheme').on('click', function() {
             const isDark = content.classList.toggle('dark-theme');
