@@ -24,13 +24,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'biblioteca_app.apps.BibliotecaAppConfig',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'biblioteca_app.apps.BibliotecaAppConfig'
 ]
 
 MIDDLEWARE = [

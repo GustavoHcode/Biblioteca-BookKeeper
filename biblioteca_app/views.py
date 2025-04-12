@@ -8,6 +8,15 @@ from .models import Book
 from datetime import datetime, timedelta
 from django.contrib import messages 
 from django.core.mail import EmailMessage
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.template.loader import render_to_string
+from bs4 import BeautifulSoup
+from xhtml2pdf import pisa
+from weasyprint import HTML
+from .models import Book, Loan 
+import os
+
 
 def home(request):
     return render(request, "home.html", context={"current_tab": "home"})
@@ -110,7 +119,7 @@ def loan_books(request):
         date_borrowed = datetime.now().date()
         date_returned = date_borrowed + timedelta(days=days)
 
-        loan = Loan.objects.create(book=book, reader=reader, date_borrowed=date_borrowed, date_returned=date_returned)
+        loan = Loan.objects.create(book=book, reader=reader, date_borrowed=date_borrowed, date_returned=date_borrowed)
 
         messages.success(request, 'Empréstimo realizado com sucesso.')
         return redirect('loan_books')
@@ -163,3 +172,28 @@ def contact(request):
 
 def success(request):
     return HttpResponse('Seu problema foi enviado com sucesso!')
+
+
+
+def relatorio(request):
+    livros = Book.objects.all() 
+    loans = Loan.objects.all()
+    return render(request, 'relatorio.html', {'books': livros, 'loans': loans})
+  
+    
+def gerar_pdf(request):
+    books = Book.objects.all()
+    loans = Loan.objects.all()
+
+    html_string = render_to_string("relatorio.html", {"books": books, "loans": loans})
+
+    
+    soup = BeautifulSoup(html_string, "html.parser")
+    conteudo_pdf = soup.find(id="conteudo-pdf")
+   
+    pdf = HTML(string=str(conteudo_pdf)).write_pdf()
+
+    
+    response = HttpResponse(pdf, content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="relatorio.pdf"'
+    return response

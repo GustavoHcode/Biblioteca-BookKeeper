@@ -1,0 +1,186 @@
+
+
+   <!DOCTYPE html>
+   <html lang="pt-BR">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       {% extends "index.html" %}
+       {% load static %} 
+       {% block main_content %}
+
+
+       <title>Painel da Biblioteca</title>
+       <style>
+            
+            .container {
+               height: auto;  
+              overflow: visible;
+             }
+
+
+           * {
+               margin: 0;
+               padding: 0;
+               box-sizing: border-box;
+               font-family: Arial, sans-serif;
+           }
+         
+
+           body {
+               background: rgb(89, 92, 193);
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               padding: 20px;
+              
+           }
+           .dashboard {
+               display: grid;
+               grid-template-columns: repeat(2, 1fr);
+               gap: 20px;
+               width: 80%;
+               max-width: 1000px;
+               margin-bottom: 40px;
+           }
+           .card {
+               background: white;
+               padding: 20px;
+               border-radius: 10px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           }
+           .title {
+               font-size: 18px;
+               font-weight: bold;
+               margin-bottom: 10px;
+           }
+           .table-container {
+               width: 80%;
+               max-width: 1000px;
+               background: white;
+               padding: 20px;
+               border-radius: 10px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               margin-bottom: 20px;
+               min-height: 500px; 
+               overflow: auto;
+           }
+           table {
+               width: 100%;
+               border-collapse: collapse;
+               display: table;
+           }
+           th, td {
+               border: 1px solid #ddd;
+               padding: 10px;
+               text-align: left;
+           }
+           th {
+               background-color: #f4f4f4;
+           }
+           .btn-container {
+            margin: 20px;
+        }
+        .btn-download {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2d9cdb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #conteudo-pdf {
+          width: 80%;  
+          max-width: 1000px; 
+          margin: auto;  
+        }
+       </style>
+   </head>
+   <body>
+    
+    <div class="btn-container">
+        
+        <button class="btn-download" onclick="window.location.href='/gerar_pdf/'">Baixar Relatório</button>
+
+    </div>
+     
+     <div id="conteudo-pdf"> 
+       <div class="dashboard">
+        
+           <div class="card">
+               <div class="title">Livros mais alugados</div>
+               <p id="alunos-com-livros">Carregando...</p>
+           </div>
+           <div class="card">
+               <div class="title">Quantidade de livros emprestados por mês</div>
+               <p id="alunos-ultimo-mes">Carregando...</p>
+           </div>
+       </div>
+       
+        <div class="table-container">
+           
+            <h2>Relatório da Biblioteca</h2>
+
+            <h3>Livros Disponíveis</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Gênero</th>
+                        <th>Emprestado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.book_name }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.isbn }}</td>
+                        <td>{% if book.borrowed %} Sim {% else %} Não {% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+            <h3>Livros Emprestados</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Livro</th>
+                        <th>Leitor</th>
+                        <th>Data de Empréstimo</th>
+                        <th>Data de Devolução</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for loan in loans %}
+                    
+                    <tr>
+                        <td>{{ loan.book.book_name }}</td>
+                        <td>{{ loan.reader.reader_name }}</td>
+                        <td>{{ loan.date_borrowed }}</td>
+                        <td>{{ loan.date_returned }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+       
+       </div>
+       </div>
+       {% endblock %}
+       
+       
+
+   </body>
+   </html>
+   
+   
+     
+   

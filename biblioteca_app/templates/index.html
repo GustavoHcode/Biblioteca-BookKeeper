@@ -138,8 +138,14 @@
         <li class="nav-item">
             <a class="nav-link {% if current_tab == 'loan_books' %}active{% endif %}" href="{% url 'loan_books'%}">📚 Empréstimo de Livros</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'relatorio' %}active{% endif %}" href="{% url 'relatorio'%}">relatorio</a>
+        </li>
+        
     </ul>
 </div>
+
+
 
 {% block main_content %}
 <p>Este é um projeto de biblioteca web desenvolvido para escolas, focado em otimizar a gestão de dados pelas bibliotecárias. Ele permite o cadastro de alunos, controle de livros emprestados, registros de devoluções e monitoramento de atrasos.</p>
