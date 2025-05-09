@@ -6,7 +6,6 @@
 {% block main_content %}
 
 <div id="search_css">
-
     <nav class="navbar bg-body-light">
         <form id="search-form" class="d-flex" role="search">
             <input id="search-input" class="form-control form-control-sm me-2 col-md-10" style="width: 1200px; border-style: solid; border-color: #8B8DDB;" type="search" placeholder="🔍 Pesquisar livros" aria-label="Search">
@@ -14,51 +13,62 @@
         </form>        
     </nav>
 
-    <div class="col-md-12">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-        <div  style="margin-top: 20px;">
+    <div class="col-md-12">
+        <div style="margin-top: 20px;">
             <p style="color: #8B8DDB">{{ books|length }} Livros registrados</p>
         </div>
 
-        <div  style="margin-top: 20px;">
-            <table class="table table-hover">
+        <div style="margin-top: 20px;">
+            <table class="table" id="bookTable">
                 <thead>
                     <tr>
-                        <th>Nome do Livro</th>
-                        <th>Autor</th>
                         <th>ISBN</th>
-                        <th>Emprestado</th>
+                        <th>Título</th>
+                        <th>Autor(es)</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="bookTableBody">
                     {% for book in books %}
                     <tr>
+                        <td>{{ book.isbn }}</td>
                         <td>{{ book.book_name }}</td>
                         <td>{{ book.author }}</td>
-                        <td>{{ book.isbn }}</td>
                         <td>
                             {% if book.borrowed %}
-                                <span class="btn btn-danger btn-sm">Sim</span>
+                            <span class="badge badge-warning">Emprestado</span>
                             {% else %}
-                                <span class="btn btn-success btn-sm">Não</span>
+                            <span class="badge badge-success">Disponível</span>
                             {% endif %}
                         </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Nenhum livro cadastrado</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
 
 <style>
-
-    body{
+    body {
         background: rgb(89,92,193);        
     }
 
-    #btnsearch_css{
+    #btnsearch_css {
         background-color: #E8CB71;
         border: none;
     }
@@ -68,31 +78,62 @@
         background-color: #8B8DDB;
     }
 
-    #search_css{
+    #search_css {
         background-color: #ffffff;
         align-items: center;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         padding: 20px 40px;
         margin: 0.5em 2.5%;
         width: 95%;
-        box-sizing:border-box;
+        box-sizing: border-box;
     }
 
+    .badge-warning {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+
+    .alert-error {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
 </style>
 
 <script>
     document.getElementById('search-form').addEventListener('submit', function(event) {
         event.preventDefault();
-    
-        var searchTerm = document.getElementById('search-input').value.toUpperCase();
-        var bookRows = document.querySelectorAll('#bookTableBody tr');
-    
-        bookRows.forEach(function(row) {
-            var bookName = row.querySelector('td:first-child').textContent.toUpperCase();
-            if (bookName.indexOf(searchTerm) > -1) {
-                row.style.display = "";
+        
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+        const rows = document.querySelectorAll('#bookTableBody tr');
+        
+        rows.forEach(row => {
+            const title = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            const isbn = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+            const author = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+            
+            if (title.includes(searchTerm) || isbn.includes(searchTerm) || author.includes(searchTerm)) {
+                row.style.display = '';
             } else {
-                row.style.display = "none";
+                row.style.display = 'none';
             }
         });
     });

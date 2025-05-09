@@ -20,8 +20,6 @@ class Book(models.Model):
     isbn = models.CharField(max_length=20, verbose_name="ISBN")
     borrowed = models.BooleanField(default=False, verbose_name="Emprestado")
 
-
-
     def __str__(self):
         return self.book_name
 

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
@@ -8,14 +9,14 @@ from .models import Book
 from datetime import datetime, timedelta
 from django.contrib import messages 
 from django.core.mail import EmailMessage
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import get_template
 from django.template.loader import render_to_string
 from bs4 import BeautifulSoup
 from xhtml2pdf import pisa
 from weasyprint import HTML
-from .models import Book, Loan 
-import os
+from .models import Book, Loan
+import os, json
 
 
 def home(request):
@@ -26,8 +27,11 @@ def readers(request):
     return render(request, "readers.html", context={"current_tab": "readers", "readers": readers_list})
 
 def books(request):
-    books_list = Book.objects.all()
-    return render(request, "books.html", context={"current_tab": "books", "books": books_list})
+    books_list = Book.objects.all().order_by('-id')
+    return render(request, "books.html", context={
+        "current_tab": "books", 
+        "books": books_list
+    })
 
 def returns(request):
     return render(request, "returns.html", context={"current_tab": "returns"})
@@ -197,3 +201,51 @@ def gerar_pdf(request):
     response = HttpResponse(pdf, content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="relatorio.pdf"'
     return response
+
+def scanner_view(request):
+    return render(request, 'scanner.html')
+
+def webcam_scanner_view(request):
+    return render(request, 'webcam_scanner.html')
+
+@csrf_exempt
+def save_book_from_webcam(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            print("Dados recebidos para salvar:", data) 
+            
+           
+            if Book.objects.filter(isbn=data['isbn']).exists():
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Este livro já está cadastrado'
+                }, status=400)
+            
+           
+            new_book = Book.objects.create(
+                isbn=data['isbn'],
+                book_name=data['title'],
+                author=data['authors'],
+                borrowed=False  
+            )
+            
+            print(f"Livro criado: ID {new_book.id}") 
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Livro salvo com sucesso!',
+                'book_id': new_book.id  
+            })
+            
+        except Exception as e:
+            print("Erro ao salvar livro:", str(e)) 
+            return JsonResponse({
+                'success': False,
+                'message': str(e)
+            }, status=400)
+    
+    return JsonResponse({
+        'success': False,
+        'message': 'Método não permitido'
+    }, status=405)

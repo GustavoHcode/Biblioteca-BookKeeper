@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>QuaggaJS barcode</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <style>
+            #camera video {
+                width: 100%;
+                max-width: 640px;
+                border: 1px solid #ccc;
+                background: #f0f0f0;
+            }
+            #book-list {
+                margin-top: 20px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                background: #f9f9f9;
+            }
+            #status {
+                margin: 10px 0;
+                padding: 8px;
+                background: #eef;
+                border: 1px solid #ddf;
+            }
+            #restart-camera {
+                margin-top: 10px;
+                padding: 8px 15px;
+                background: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            #restart-camera:hover {
+                background: #45a049;
+            }
+            #restart-camera:disabled {
+                background: #cccccc;
+                cursor: not-allowed;
+            }
+        </style>
+    </head>
+
+    <body>
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        
+        <div id="camera" style="width: 100%;"></div>
+        
+        <div id="status">Inicializando câmera...</div>
+        
+        <button id="restart-camera" disabled>Reiniciar Câmera</button>
+        
+        <div id="book-list">
+            <h3>Livros escaneados:</h3>
+        </div>
+        <div id="confirmation-section" style="display: none; margin-top: 20px; padding: 15px; background: #f8f9fa; border: 1px solid #ddd;">
+            <h3>Confirmar Livro:</h3>
+            <div id="book-confirmation-details"></div>
+            <button id="save-to-db-btn" style="margin-top: 10px; padding: 8px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Salvar no Banco de Dados
+            </button>
+            <button id="cancel-save-btn" style="margin-top: 10px; padding: 8px 15px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">
+                Cancelar
+            </button>
+        </div>
+
+        <script src="https://unpkg.com/@ericblade/quagga2@1.2.6/dist/quagga.min.js"></script>
+
+        <script>
+            
+            let cameraActive = false;
+            let stream = null;
+
+            
+            const quaggaConf = {
+                inputStream: {
+                    target: document.querySelector("#camera"),
+                    type: "LiveStream",
+                    constraints: {
+                        width: { min: 640 },
+                        height: { min: 480 },
+                        facingMode: "environment",
+                        aspectRatio: { min: 1, max: 2 }
+                    }
+                },
+                decoder: {
+                    readers: ['ean_reader']
+                },
+                locator: {
+                    patchSize: "medium",
+                    halfSample: true
+                },
+                locate: true,
+                numOfWorkers: 4
+            };
+
+            
+            function stopCamera() {
+                return new Promise((resolve) => {
+                    if (cameraActive) {
+                        Quagga.stop();
+                        cameraActive = false;
+                        document.getElementById("restart-camera").disabled = true;
+                        
+                        
+                        const videoElements = document.querySelectorAll('video');
+                        videoElements.forEach(video => {
+                            if (video.srcObject) {
+                                video.srcObject.getTracks().forEach(track => track.stop());
+                                video.srcObject = null;
+                            }
+                        });
+                        
+                        
+                        document.getElementById("camera").innerHTML = '';
+                    }
+                    setTimeout(resolve, 500); 
+                });
+            }
+
+            
+            function startCamera() {
+                document.getElementById("status").textContent = "Iniciando câmera...";
+                
+                Quagga.init(quaggaConf, function (err) {
+                    if (err) {
+                        document.getElementById("status").textContent = "Erro ao inicializar câmera: " + err.message;
+                        console.error("Erro na inicialização:", err);
+                        return;
+                    }
+                    
+                    Quagga.start();
+                    cameraActive = true;
+                    document.getElementById("restart-camera").disabled = false;
+                    document.getElementById("status").textContent = "Câmera pronta - Aponte para um código de barras";
+                });
+            }
+
+            
+            startCamera();
+
+            
+            document.getElementById("restart-camera").addEventListener("click", async function() {
+                this.disabled = true;
+                document.getElementById("status").textContent = "Reiniciando câmera...";
+                
+                await stopCamera();
+                startCamera();
+            });
+
+            
+            
+            let lastScannedBook = null;
+
+ Quagga.onDetected(async function(result) {
+    const code = result.codeResult.code;
+    document.getElementById("status").textContent = "Código detectado: " + code;
+    
+    await stopCamera();
+    
+    try {
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${code}`);
+        if (!response.ok) throw new Error('Erro na API do Google Books');
+        
+        const data = await response.json();
+        
+        if (data.totalItems > 0) {
+            const book = data.items[0].volumeInfo;
+            lastScannedBook = {
+                isbn: code,
+                title: book.title || "Título não encontrado",
+                authors: book.authors ? book.authors.join(", ") : "Autor Desconhecido"
+            };
+            
+            document.getElementById("book-confirmation-details").innerHTML = `
+                <p><strong>Título:</strong> ${lastScannedBook.title}</p>
+                <p><strong>Autor(es):</strong> ${lastScannedBook.authors}</p>
+                <p><strong>ISBN:</strong> ${lastScannedBook.isbn}</p>
+            `;
+            
+            document.getElementById("book-list").style.display = "none";
+            document.getElementById("confirmation-section").style.display = "block";
+            
+        } else {
+            throw new Error('Livro não encontrado na API');
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+        document.getElementById("status").textContent = "Erro: " + error.message;
+        setTimeout(startCamera, 2000);
+    }
+});
+document.getElementById("save-to-db-btn").addEventListener("click", async function() {
+    if (!lastScannedBook) return;
+    
+    this.disabled = true;
+    document.getElementById("status").textContent = "Salvando livro...";
+    
+    try {
+        const saveResponse = await fetch('/save-book-from-webcam/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify(lastScannedBook)
+        });
+        
+        if (!saveResponse.ok) throw new Error('Erro no servidor');
+        
+        const saveData = await saveResponse.json();
+        if (!saveData.success) throw new Error(saveData.message || 'Erro ao salvar o livro');
+        
+        document.getElementById("status").textContent = "Livro salvo com sucesso! Redirecionando...";
+        window.location.href = '/books/'; 
+        
+    } catch (error) {
+        console.error("Erro:", error);
+        document.getElementById("status").textContent = "Erro: " + error.message;
+        this.disabled = false;
+    }
+});
+
+document.getElementById("cancel-save-btn").addEventListener("click", function() {
+    document.getElementById("confirmation-section").style.display = "none";
+    document.getElementById("book-list").style.display = "block";
+    startCamera();
+});
+
+            
+            Quagga.onProcessed(function(result) {
+                console.log("Processado:", result);
+            });
+        </script>
+    </body>
+</html>
